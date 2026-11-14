@@ -14,6 +14,7 @@ function iniciar() {
   });
 
   bot.on('spawn', () => {
+    console.log('Bot entrou no servidor!');
     setInterval(() => {
       bot.setControlState('jump', true);
       setTimeout(() => bot.setControlState('jump', false), 500);
@@ -21,7 +22,10 @@ function iniciar() {
   });
 
   bot.on('end', () => setTimeout(iniciar, 10000));
-  bot.on('error', () => {});
+  bot.on('error', (err) => {
+    console.log('Tentando de novo em 10s...', err.message);
+    setTimeout(iniciar, 10000);
+  });
 }
 
 iniciar();
